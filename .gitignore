@@ -175,3 +175,4 @@ cython_debug/
 
 # My file for testing some code separately
 test.py
+*.db
