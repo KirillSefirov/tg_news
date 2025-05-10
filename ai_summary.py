@@ -8,11 +8,12 @@ def get_article_sum_and_priority(article_text):
         "http://localhost:11434/api/generate",
         json={
             "model": "llama3.1",
-            "prompt": "Summarize article, and at the end of the summary, "
-                      "very last symbol should be it's global importance from 0 to 9. "
-                      "Your response should consist of only the summary and priority. No extra text."
-                      "No words here's the summary."
-                      "Article text starts after dot. " + article_text,
+            "prompt": "Summarize the article. At the end, add a single digit (0–9) "
+                      "showing its global importance—0 = none, 9 = major impact. "
+                      "Consider only technological impact for tech news."
+                      "Be objective and strict. "
+                      "Be short: Output only the summary and the digit. Be short: Do not add anything."
+                      "Be short: No intro or extra text. Article starts after the dot: " + article_text,
             "stream": False
         }
     )
