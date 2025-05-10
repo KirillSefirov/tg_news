@@ -10,7 +10,8 @@ def create_database():
     article_url TEXT NOT NULL,
     article_date TEXT NOT NULL,
     article_body TEXT NOT NULL,
-    article_summary TEXT NOT NULL
+    article_summary TEXT NOT NULL,
+    article_priority INTEGER
     )
     """)
 
@@ -26,12 +27,21 @@ def add_index_by_url():
     connection.commit()
     connection.close()
 
-def save_article(article_title, article_url, article_date="", article_body="", article_summary=""):
+def save_article(article_title, article_url, article_date="", article_body="", article_summary="", article_priority=0):
     connection = sqlite3.connect('news_info.db')
     cursor = connection.cursor()
     cursor.execute('INSERT INTO articles '
-                   '(article_title, article_url, article_date, article_body, article_summary) '
-                   'VALUES (?, ?, ?, ?, ?)',
-                   (article_title, article_url, article_date, article_body, article_summary))
+                   '(article_title, article_url, article_date, article_body, article_summary, article_priority) '
+                   'VALUES (?, ?, ?, ?, ?, ?)',
+                   (article_title, article_url, article_date, article_body, article_summary, article_priority))
+    connection.commit()
+    connection.close()
+
+def save_summary_and_priority_for_article_url(article_url, article_summary, article_priority):
+    connection = sqlite3.connect('news_info.db')
+    cursor = connection.cursor()
+    cursor.execute('UPDATE articles SET article_summary = ?, article_priority = ? WHERE article_url = ?',
+                   (article_summary, article_priority, article_url)
+                   )
     connection.commit()
     connection.close()
